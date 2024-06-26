@@ -1,0 +1,2 @@
+Method,Accuracy,Precision,Recall,F1 Score
+Gradient Boosting,0.9999663684670748,0.9998618975279657,1.0,0.9999309439955805
