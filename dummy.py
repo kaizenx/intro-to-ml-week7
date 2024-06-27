@@ -22,15 +22,6 @@ y = data['Status']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 
-# Step 6: select important features 
-
-# Method 1: Correlation Analysis
-correlation_matrix = data.corr()
-correlation_with_target = correlation_matrix["Status"].sort_values(ascending=False)
-top_corr_features = correlation_with_target.index[1:11]  # Select top 10 correlated features
-
-print(top_corr_features)
-
 
 # Define the dummy classifier model
 dummy = DummyClassifier(strategy="uniform", random_state=42)
