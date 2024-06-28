@@ -8,8 +8,7 @@ data = pd.read_csv("filtered_data.csv")
 # Create a DataFrame with the relevant features
 X = data[["credit_type_EQUI", "co-applicant_credit_type_EXP"]]
 # X = data.select_dtypes(include=['int64', 'float64'])
-# Add a constant column to the DataFrame for VIF calculation
-# features_with_const = data.add_constant(features)
+
 
 # Calculate VIF for each feature
 vif_data = pd.DataFrame()
