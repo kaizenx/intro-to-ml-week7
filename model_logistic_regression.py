@@ -15,6 +15,7 @@ data['Status'] = data['Status'].astype('category').cat.codes
 X = data.drop(columns=['Status'])
 y = data['Status']
 
+# select best 10 based on ANOVA
 selector = SelectKBest(score_func=f_classif, k=10)
 X_new = selector.fit_transform(X, y)
 
@@ -29,7 +30,7 @@ param_grid = {
     'penalty': ['l1', 'l2', 'elasticnet', 'none'],
     'C': [0.01, 0.1, 1, 10, 100],
     'solver': ['newton-cg', 'lbfgs', 'liblinear', 'sag', 'saga'],
-    'l1_ratio': [None, 0.5]  # Only used if penalty is 'elasticnet'
+    'l1_ratio': [None, 0.5]  # Only used during penalty is elasticnet
 }
 
 # Define the grid search

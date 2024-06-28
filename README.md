@@ -16,7 +16,7 @@
 8. correlation_matrix.py is used to generate a correlation matrix of the filtered data
 9. model_dummy.py is the dummy classifier implementation used for benchmark purposes
 10. (Takes a while to run) model_logistic_regression.py is the logistic regression classifier implementation
-11. (Takes a while to run) model_randomforest_estimator.py is the random forest implementation, gridsearch powered hyperparameter tuning for n_estimators
+11. (Takes a while to run) model_randomforest_estimator.py is the random forest implementation, contains gridsearch powered hyperparameter tuning for n_estimators
 12. (Takes a while to run) model_randomforest.py is the random forest implementation, contains gridsearch powered hyperparamameter tuning for n_estimators and max_depth
 13. (Takes a while to run) model_randomforest_smote.py, contains gridsearch powered hyperparamameter tuning for n_estimators and max_depth with smote implmentation
 

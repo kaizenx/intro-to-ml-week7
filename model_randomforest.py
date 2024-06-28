@@ -11,18 +11,14 @@ from imblearn.over_sampling import SMOTE
 # Load the data
 data = pd.read_csv("filtered_data.csv")
 
-# selected features
-# selected_features = [ 'credit_type_EQUI', 'co-applicant_credit_type_EXP',
-#                       'submission_of_application_to_inst', 'term_300.0', 'dtir1' ]
-
 # Encode the target variable
 data['Status'] = data['Status'].astype('category').cat.codes
 
 
 X = data.drop(columns=['Status'])
-# X = data[selected_features]
 y = data['Status']
 
+# select best 10 based on ANOVA
 selector = SelectKBest(score_func=f_classif, k=10)
 X_new = selector.fit_transform(X, y)
 
