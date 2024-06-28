@@ -64,7 +64,7 @@ y_pred_prob = best_rf_model.predict_proba(X_test)[:, 1]
 accuracy = accuracy_score(y_test, y_pred)
 precision = precision_score(y_test, y_pred)
 recall = recall_score(y_test, y_pred)
-f1 = f1_score(y_test, y_pred)
+f1 = f1_score(y_test, y_pred)   
 roc_auc = roc_auc_score(y_test, y_pred_prob)
 
 print("Test Performance:")

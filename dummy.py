@@ -6,7 +6,6 @@ from sklearn.model_selection import train_test_split, cross_val_score, Stratifie
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, confusion_matrix, classification_report
 from sklearn.dummy import DummyClassifier
 
-
 # Load the data
 data = pd.read_csv("filtered_data.csv")
 
@@ -22,8 +21,6 @@ y = data['Status']
 # Split the data
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=100)
 
-
-
 # Define the dummy classifier model
 dummy = DummyClassifier(strategy="uniform", random_state=100)
 
@@ -38,35 +35,51 @@ print(f"Standard Deviation of Dummy Classifier Cross-Validation Accuracy: {dummy
 # Train the dummy classifier
 dummy.fit(X_train, y_train)
 
-# Make predictions with dummy classifier
-y_dummy_pred = dummy.predict(X_test)
+# Make predictions with dummy classifier on test data
+y_dummy_test_pred = dummy.predict(X_test)
 
-# Evaluate the dummy classifier model
-dummy_accuracy = accuracy_score(y_test, y_dummy_pred)
-dummy_precision = precision_score(y_test, y_dummy_pred)
-dummy_recall = recall_score(y_test, y_dummy_pred)
-dummy_f1 = f1_score(y_test, y_dummy_pred)
-dummy_roc_auc = roc_auc_score(y_test, y_dummy_pred)
+# Evaluate the dummy classifier model on test data
+dummy_test_accuracy = accuracy_score(y_test, y_dummy_test_pred)
+dummy_test_precision = precision_score(y_test, y_dummy_test_pred)
+dummy_test_recall = recall_score(y_test, y_dummy_test_pred)
+dummy_test_f1 = f1_score(y_test, y_dummy_test_pred)
+dummy_test_roc_auc = roc_auc_score(y_test, y_dummy_test_pred)
 
-print(f"Dummy Classifier Accuracy: {dummy_accuracy}")
-print(f"Dummy Classifier Precision: {dummy_precision}")
-print(f"Dummy Classifier Recall: {dummy_recall}")
-print(f"Dummy Classifier F1 Score: {dummy_f1}")
-print(f"Dummy Classifier ROC AUC Score: {dummy_roc_auc}")
+print(f"Dummy Classifier Test Accuracy: {dummy_test_accuracy}")
+print(f"Dummy Classifier Test Precision: {dummy_test_precision}")
+print(f"Dummy Classifier Test Recall: {dummy_test_recall}")
+print(f"Dummy Classifier Test F1 Score: {dummy_test_f1}")
+print(f"Dummy Classifier Test ROC AUC Score: {dummy_test_roc_auc}")
 
-# Display the confusion matrix for dummy classifier
-dummy_conf_matrix = confusion_matrix(y_test, y_dummy_pred)
-print("Confusion Matrix (Dummy Classifier):")
-print(dummy_conf_matrix)
+# Make predictions with dummy classifier on training data
+y_dummy_train_pred = dummy.predict(X_train)
 
-# Display the classification report for dummy classifier
-dummy_class_report = classification_report(y_test, y_dummy_pred)
-print("Classification Report (Dummy Classifier):")
-print(dummy_class_report)
+# Evaluate the dummy classifier model on training data
+dummy_train_accuracy = accuracy_score(y_train, y_dummy_train_pred)
+dummy_train_precision = precision_score(y_train, y_dummy_train_pred)
+dummy_train_recall = recall_score(y_train, y_dummy_train_pred)
+dummy_train_f1 = f1_score(y_train, y_dummy_train_pred)
+dummy_train_roc_auc = roc_auc_score(y_train, y_dummy_train_pred)
 
-# Plot the confusion matrix for dummy classifier
-sns.heatmap(dummy_conf_matrix, annot=True, fmt='d', cmap='Blues')
+print(f"Dummy Classifier Training Accuracy: {dummy_train_accuracy}")
+print(f"Dummy Classifier Training Precision: {dummy_train_precision}")
+print(f"Dummy Classifier Training Recall: {dummy_train_recall}")
+print(f"Dummy Classifier Training F1 Score: {dummy_train_f1}")
+print(f"Dummy Classifier Training ROC AUC Score: {dummy_train_roc_auc}")
+
+# Display the confusion matrix for dummy classifier on test data
+dummy_test_conf_matrix = confusion_matrix(y_test, y_dummy_test_pred)
+print("Confusion Matrix (Dummy Classifier - Test Data):")
+print(dummy_test_conf_matrix)
+
+# Display the classification report for dummy classifier on test data
+dummy_test_class_report = classification_report(y_test, y_dummy_test_pred)
+print("Classification Report (Dummy Classifier - Test Data):")
+print(dummy_test_class_report)
+
+# Plot the confusion matrix for dummy classifier on test data
+sns.heatmap(dummy_test_conf_matrix, annot=True, fmt='d', cmap='Blues')
 plt.xlabel('Predicted')
 plt.ylabel('Actual')
-plt.title('Confusion Matrix (Dummy Classifier)')
+plt.title('Confusion Matrix (Dummy Classifier - Test Data)')
 plt.show()
