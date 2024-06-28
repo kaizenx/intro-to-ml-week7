@@ -2,47 +2,47 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.feature_selection import RFE
-from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split, cross_val_score, StratifiedKFold
+from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, confusion_matrix, classification_report
-from statsmodels.stats.outliers_influence import variance_inflation_factor
-
 
 # Load the data
 data = pd.read_csv("filtered_data.csv")
 
+# Encode the target variable
 data['Status'] = data['Status'].astype('category').cat.codes
 
+# Split features and target
 X = data.drop(columns=['Status'])
 y = data['Status']
 
-
 # Split the data
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=100)
 
-# Define the logistic regression model
-logreg = LogisticRegression(max_iter=1000, random_state=42)
+# Define the SVM model
+svm_model = SVC(probability=True, random_state=100)
 
-cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-cv_results = cross_val_score(logreg, X, y, cv=cv, scoring='accuracy')
+# Perform cross-validation
+cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=100)
+cv_results = cross_val_score(svm_model, X, y, cv=cv, scoring='accuracy')
 
 print(f"Cross-Validation Accuracy Scores: {cv_results}")
 print(f"Mean Cross-Validation Accuracy: {cv_results.mean()}")
 print(f"Standard Deviation of Cross-Validation Accuracy: {cv_results.std()}")
 
 # Train the model
-logreg.fit(X_train, y_train)
+svm_model.fit(X_train, y_train)
 
 # Make predictions
-y_pred = logreg.predict(X_test)
+y_pred = svm_model.predict(X_test)
+y_pred_prob = svm_model.predict_proba(X_test)[:, 1]
 
 # Evaluate the model
 accuracy = accuracy_score(y_test, y_pred)
 precision = precision_score(y_test, y_pred)
 recall = recall_score(y_test, y_pred)
 f1 = f1_score(y_test, y_pred)
-roc_auc = roc_auc_score(y_test, y_pred)
+roc_auc = roc_auc_score(y_test, y_pred_prob)
 
 print(f"Accuracy: {accuracy}")
 print(f"Precision: {precision}")
@@ -66,6 +66,3 @@ plt.xlabel('Predicted')
 plt.ylabel('Actual')
 plt.title('Confusion Matrix')
 plt.show()
-
-
-

@@ -10,21 +10,13 @@ for col, unique_vals in unique_values_dict.items():
 
 nan_percentage = data.isna().mean() * 100
 
-# Print the percentage of NaN values per column to determine the missing values, or percentage of missing values per column
+
 print(nan_percentage)
-
-# data.drop(columns=unnecessary_features, inplace=True)
-
 unnecessary_features = ['ID','year']
 print(data.head())
 
-# unique_values_dict = {col: data[col].unique() for col in data.columns}
-
-# for col, unique_vals in unique_values_dict.items():
-#     print(f"Unique values in {col}: {unique_vals}")
 data.drop_duplicates(inplace=True)
 data.drop(columns=unnecessary_features, inplace=True)
-# drop row when credit_type_EQUI is NaN because 
 data = data.dropna(how='all')
 
 # set a column's datatype as categorical or numeric
@@ -63,7 +55,6 @@ for column in numerical_columns:
 # Use one-hot encoding to convert categorical variables into numerical format.
 data = pd.get_dummies(data, columns=categorical_columns, drop_first=True)
 
-
 # Encode the target variable 'Status' as numeric.
 data['Status'] = data['Status'].astype(int)
 
@@ -75,7 +66,3 @@ data[numerical_columns] = scaler.fit_transform(data[numerical_columns])
 data['Status'] = data['Status'].astype('category').cat.codes
 
 data.to_csv("filtered_data.csv", index=False)
-
-
-
-

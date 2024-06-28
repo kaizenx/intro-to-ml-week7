@@ -1,10 +1,7 @@
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
-import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.feature_selection import RFE
-from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split, cross_val_score, StratifiedKFold
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, confusion_matrix, classification_report
 from sklearn.dummy import DummyClassifier
@@ -15,30 +12,34 @@ data = pd.read_csv("filtered_data.csv")
 
 data['Status'] = data['Status'].astype('category').cat.codes
 
-X = data.drop(columns=['Status'])
+# selected features
+selected_features = [ 'credit_type_EQUI', 'co-applicant_credit_type_EXP',
+                      'submission_of_application_to_inst', 'term_300.0', 'dtir1' ]
+
+X = data[selected_features]
 y = data['Status']
 
 # Split the data
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=100)
 
 
 
 # Define the dummy classifier model
-dummy = DummyClassifier(strategy="uniform", random_state=42)
+dummy = DummyClassifier(strategy="uniform", random_state=100)
 
 # Perform cross-validation with dummy classifier
-cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-dummy_cv_results = cross_val_score(dummy, X[top_corr_features], y, cv=cv, scoring='accuracy')
+cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=100)
+dummy_cv_results = cross_val_score(dummy, X, y, cv=cv, scoring='accuracy')
 
 print(f"Dummy Classifier Cross-Validation Accuracy Scores: {dummy_cv_results}")
 print(f"Mean Dummy Classifier Cross-Validation Accuracy: {dummy_cv_results.mean()}")
 print(f"Standard Deviation of Dummy Classifier Cross-Validation Accuracy: {dummy_cv_results.std()}")
 
 # Train the dummy classifier
-dummy.fit(X_train[top_corr_features], y_train)
+dummy.fit(X_train, y_train)
 
 # Make predictions with dummy classifier
-y_dummy_pred = dummy.predict(X_test[top_corr_features])
+y_dummy_pred = dummy.predict(X_test)
 
 # Evaluate the dummy classifier model
 dummy_accuracy = accuracy_score(y_test, y_dummy_pred)
@@ -64,7 +65,7 @@ print("Classification Report (Dummy Classifier):")
 print(dummy_class_report)
 
 # Plot the confusion matrix for dummy classifier
-sns.heatmap(dummy_conf_matrix, annot=True, fmt='d', cmap='Reds')
+sns.heatmap(dummy_conf_matrix, annot=True, fmt='d', cmap='Blues')
 plt.xlabel('Predicted')
 plt.ylabel('Actual')
 plt.title('Confusion Matrix (Dummy Classifier)')
