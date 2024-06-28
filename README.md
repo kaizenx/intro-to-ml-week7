@@ -1,19 +1,25 @@
-# Week 7
+# Supervised Machine Learning Project (Week 7)
 
-## Models I learned in class
-
-1. Linear Regression
-2. Logistic Regression
-3. Ridge Regression
-4. KNN
-5. Decision Tree
-6. Random forest
-7. Bagging
-8. Boosting
-9. Adaboost
-10. Gradient Boosting
-11. SVM
+## Source data
+1. Source of loan data [here](https://www.kaggle.com/datasets/yasserh/loan-default-dataset/data)
 
 ## File descriptions
 
-1. describe.py was used to describe the data, get number of rows, features etc..
+1. munging.py is used to clean and prepare the data, it makes filtered_data.csv
+2. histogram.py is used to create histograms and correlation matrix
+3. unique_values.py is used to generate QQ plots for features and display unique values of the features
+4. multicollinearity_check.py is used to calculate VIF and detect multicollinearity
+5. describe.py was used to describe the data, get number of rows, features etc..
+6. get_numeric_features.py is used to determine the numeric features
+7. perfect_qq.py is used to generate a perfect looking QQ chart
+8. correlation_matrix.py is used to generate a correlation matrix of the filtered data
+9. dummy.py is the dummy classifier implementation used for benchmark purposes
+10. (Takes a while to run) model_logistic_regression.py is the logistic regression classifier implementation
+11. (Takes a while to run) model_randomforest.py is the random forest implementation
+
+## Instructions
+
+1. You can start by running pip install with requirement.txt
+2. Then download the data and rename the file to loadn_data.csv if need be.
+3. Run munging.py to create the filtered_data.csv before using any of the other files.
+4. Then based on your desire, you can run the other script files. For example run model_randomforest.py if you want to see the results for randomforest.
